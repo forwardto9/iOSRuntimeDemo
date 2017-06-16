@@ -81,6 +81,11 @@ OBJC_ROOT_CLASS @interface MyRootClass
     NSLog(@"%s", __FUNCTION__);
 }
 
+// c method
+- (void)myClassReplacedMethod {
+    NSLog(@"myClassReplacedMethod");
+}
+
 @end
 
 
@@ -114,7 +119,6 @@ int main(int argc, const char * argv[]) {
         
         // You must register a method name with the Objective-C runtime system to obtain the method’s selector before you can add the method to a class definition. If the method name has already been registered, this function simply returns the selector.
         SEL aDynanicMethodSelector = sel_registerName("aDynanicMethod");
-//        if (class_respondsToSelector(cls, @selector(aDynanicMethod))) {
         if (class_respondsToSelector(cls, aDynanicMethodSelector)) {
             NSLog(@"Class respond to Method");
         } else {
@@ -122,8 +126,6 @@ int main(int argc, const char * argv[]) {
         }
         
         // add method
-        
-        
         BOOL addMethodResult = class_addMethod(cls, aDynanicMethodSelector, (IMP)(myMethodIMP), "v@:");
         if (addMethodResult) {
             NSLog(@"Add a method to Class Success!");
@@ -133,6 +135,7 @@ int main(int argc, const char * argv[]) {
         
         if (class_respondsToSelector(cls, aDynanicMethodSelector)) {
             NSLog(@"Class respond to Method");
+            
         } else {
             NSLog(@"Class not respond to Method");
         }
@@ -253,7 +256,20 @@ int main(int argc, const char * argv[]) {
         NS_VALID_UNTIL_END_OF_SCOPE MyClass *myClassInstace = [MyClass new];
         [myClassInstace canBeReplacedMethod];
         // replace method
-        class_replaceMethod(myClass, @selector(canBeReplacedMethod), (IMP)(myClassReplaceMethod), "@v:");
+        Method oringnalMethod = class_getInstanceMethod(myClass, @selector(canBeReplacedMethod));
+        IMP originalIMP = method_getImplementation(oringnalMethod);
+        
+        
+        BOOL hadThisMehod = class_addMethod(myClass, @selector(canBeReplacedMethod), originalIMP, method_getTypeEncoding(oringnalMethod));
+        if (hadThisMehod) {
+            NSLog(@" class had this method now replace");
+            // 使用C方式的替换
+            class_replaceMethod(myClass, @selector(canBeReplacedMethod), (IMP)(myClassReplaceMethod), "@v:");
+            
+            // 也可以通过Category的方式扩展类的方法，然后将方法class_replaceMethod中使用的参数，通过runtime函数获取
+        } else {
+            method_exchangeImplementations(oringnalMethod, class_getInstanceMethod(myClass, @selector(myClassReplacedMethod)));
+        }
         
         [myClassInstace canBeReplacedMethod];
         
@@ -296,11 +312,6 @@ int main(int argc, const char * argv[]) {
         NSLog(@"myClassMetaClass name is %s", object_getClassName(myClassMetaClass));
         
         /****************  get class defintion end******************** */
-        
-        
-        
-        
-        
         
         unsigned int myClassProperyCount = 0;
         objc_property_t *myClassProperties = class_copyPropertyList(myClass, &myClassProperyCount);
@@ -391,9 +402,6 @@ int main(int argc, const char * argv[]) {
                 method_setImplementation(myClassMethodList[i], (IMP)(myMethodBeSetIMP));
 //                method_invoke(myClassInstace, myClassMethodList[i]);
             }
-            
-            //exchange method IMP
-//            void method_exchangeImplementations( Method m1, Method m2)
             
             
 //            char * method_copyArgumentType( Method method, unsigned int index)
