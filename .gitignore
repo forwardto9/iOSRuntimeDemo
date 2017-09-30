@@ -4,3 +4,4 @@
 *.xcscheme
 
 RunTimeDemo/RunTimeDemo.xcodeproj/xcuserdata/uwei.xcuserdatad/xcschemes/xcschememanagement.plist
+*.xcbkptlist
