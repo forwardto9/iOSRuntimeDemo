@@ -37,8 +37,9 @@ OBJC_ROOT_CLASS @interface MyRootClass
     int instanceVar;
 }
 
-@property (copy, nonatomic) NSString *name;
 @property (assign, atomic)  CGFloat  age;
+@property (nonatomic, copy) NSString *name;
+
 
 - (void)myClassInstanceMethodWithOutParamater;
 - (void)myClassInstanceMethodWithParamater:(id)paramater;
@@ -111,6 +112,22 @@ OBJC_ROOT_CLASS @interface MyRootClass
 @implementation MySubClass
 @end
 
+@interface LayoutClass:NSObject{
+}
+
+@property (nonatomic, strong)  id  prop1_s;
+// 内存中的layout 将会优先排列基本数据类型
+@property (nonatomic, assign)  int  prop0_int;
+@property (nonatomic, assign)  int  prop1_int;
+@property (nonatomic, assign)  int  prop2_int;
+
+@property (nonatomic, strong)  id  prop2_s;
+@property (nonatomic, weak)  id  prop3_w;
+@property (nonatomic, strong)  id  prop4_s;
+
+@end
+@implementation LayoutClass
+@end
 
 // c method
 void myClassReplaceMethod(id self, SEL _cmd) {
@@ -315,9 +332,16 @@ int main(int argc, const char * argv[]) {
         // 对齐原则
         // 不同类型的成员变量占内存大小不同
         NSLog(@"the size of instances of a class is %zu",class_getInstanceSize(myClass));
-        // TODO: what is layout?
-        NSLog(@"Var Layout is %s", class_getIvarLayout(myClass));
-
+        // TODO: what is layout? Layout是描述属性在对象内存中的布局
+        // 查询strong，weak的属性描述，这个序列会将基本数据类型排在最前面
+        const uint8_t *array_layout = class_getIvarLayout([LayoutClass class]);
+        int layoutIndex = 0;
+        int8_t layoutValue = array_layout[layoutIndex];
+        while (layoutValue != 0x0) {
+            // 内存中的layout 将会优先排列基本数据类型
+            printf("\\x%02x\n", layoutValue);
+            layoutValue = array_layout[++layoutIndex];
+        }
         Method myClassClassMethod = class_getClassMethod(myClass, @selector(myClassClassMethodWithOutParamater));
         NSLog(@"myClass class Method is %s", sel_getName(method_getName(myClassClassMethod)));
         //通过使用sel_registerName可以绕过编译器检查
