@@ -396,6 +396,10 @@ int main(int argc, const char * argv[]) {
         // 修改实例对象所属的类
         object_setClass(myClassInstace, cls);
         NSLog(@"myClassInstace's class name is %s", object_getClassName(myClassInstace));
+        if (![myClassInstace respondsToSelector:@selector(myClassInstanceMethodWithOutParamater)] && [myClassInstace respondsToSelector:aDynamicRegisterSEL]) {
+            NSLog(@"isa swizzing ok");
+        }
+        
         object_setClass(myClassInstace, myClass);
         
         /****************  working with instance end******************** */
