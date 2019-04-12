@@ -217,6 +217,8 @@ int main(int argc, const char * argv[]) {
             
             // 方法4，推荐
             Method m = class_getInstanceMethod(cls, aDynamicRegisterSEL);
+            
+            // 如果报错，需要在工程-Build Settings  中将Enable Strict Checking of objc_msgSend Calls 设置为NO即可
             method_invoke(cls, m);
         } else {
             NSLog(@"Class not respond to Method");
