@@ -1,7 +1,4 @@
+project.xcworkspace/
 
-*.xcuserstate
+xcuserdata/
 
-*.xcscheme
-
-RunTimeDemo/RunTimeDemo.xcodeproj/xcuserdata/uwei.xcuserdatad/xcschemes/xcschememanagement.plist
-*.xcbkptlist

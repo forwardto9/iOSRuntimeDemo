@@ -369,6 +369,8 @@ int main(int argc, const char * argv[]) {
         IMP originalIMP = class_getMethodImplementation(myClass, @selector(canBeReplacedMethod));
         
         [myClassInstace canBeReplacedMethod];
+        // TypeEncoding 规则
+        /* 方法中的第一个数字是方法的参数的堆栈大小，参数类型之后的数字是内存中偏移到类型所代表的值 */
         BOOL hadThisMehod = class_addMethod(myClass, @selector(canBeReplacedMethod), originalIMP, method_getTypeEncoding(oringnalMethod));
         if (hadThisMehod) {
             NSLog(@" class had this method now replace");
