@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <objc/message.h>
+#import "MethodForward.h"
 
 // OBJC_OLD_DISPATCH_PROTOTYPES
 
@@ -163,10 +164,136 @@ void mutateFunction(id obj) {
     NSLog(@"%s", __func__);
 }
 
+
+#pragma mark - __attribute__
+void printWithWarning(void * p, const char * format, ...)__attribute__((format(printf,2,3)));
+void printWithoutWarning(const char * format, ...);
+
+void printWithWarning(void * p, const char * format, ...) {
+    printf("%s\n", format);
+}
+
+void printWithoutWarning(const char * format, ...) {
+    printf("%s\n", format);
+}
+
+
+static __attribute__((constructor(103))) void beforeMain103() {
+    printf("beforeMain 103\n");
+}
+
+static __attribute__((constructor(101))) void beforeMain101() {
+    printf("beforeMain 101 \n");
+}
+
+static void beforeMain102(void) __attribute__((constructor(102)));
+
+static void beforeMain102(){
+    printf("beforeMain 102 \n");
+    
+#if defined(__has_feature)
+#if __has_attribute(availability)
+    // 如果`availability`属性可以使用，则....
+#endif
+#endif
+}
+
+
+static __attribute__((destructor)) void afterMain() {
+    printf(" afterMain \n");
+}
+
+
+static int i_g = 0;
+__const__ int testConst(void) {
+    printf("%d", i_g);
+    return i_g;
+}
+
+void testMethod(__unused int x, int y) {
+    printf("y = %d\n", y);
+}
+
+
+typedef void (^SFCommonBlock)();
+static void extracted() {
+    testMethod(1, 2);
+}
+
+
+__attribute__((overloadable))
+void myprint(NSString *string){
+    NSLog(@"%@",string);
+}
+
+__attribute__((overloadable)) void myprint(int num){
+    NSLog(@"%d",num);
+}
+
+
+#define ROOT "/mnt/sd/"
+#define NAME "kernel.img"
+
+#define path(dir,name) dir##name
+#define print(format,args...) printf(format,##args)
+#define test(name) #name
+
+enum
+{
+    MON = 1,
+    TUE = 2,
+    SUN = 7
+};
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         NSLog(@"Hello, World!");
+        extracted();
+        printWithWarning(NULL, "id = %d", 6);
+        printWithoutWarning("id = %s", 6);
+        
+        myprint(@"hello");
+        myprint(6);
+        printf("path(dir,name) = %s\n", path(RO,OT));
+        
+        //printf("macro TEST = %s\n", TEST);
+        printf("test(name) = %s\n", test(NAME));
+        printf("test(MON) = %s\n", test(MON));
+        //printf("#MON = %s\n", #MON);
+        
+        print("----%s%s\n", ROOT,NAME);
+        
+        NSLog(@"contract name start!");
+        
+        MethodForward *demo = [MethodForward new];
+        NSMethodSignature *ms = [NSMethodSignature signatureWithObjCTypes:"v@:@"];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+        invocation.target = demo;
+        invocation.selector = @selector(test:);
+        [invocation setArgument:@"fuck" atIndex:2];
+        [invocation invoke];
+        
+        
+        void (^block1)(void) = ^{
+            NSLog(@"Empty Block");
+        };
+        
+        void (^block2)(NSInteger) = ^(NSInteger code){
+            NSLog(@"code = %ld", code);
+        };
+        
+        void (^block3)(id, NSInteger) = ^(id response, NSInteger code) {
+            NSLog(@"response = %@, code = %ld", response, code);
+        };
+        
+        SFCommonBlock commonBlock1 = block1;
+        SFCommonBlock commonBlock2 = block2;
+        SFCommonBlock commonBlock3 = block3;
+        
+        commonBlock1(); // Empty Block
+        commonBlock2(999);// Code = 999
+        commonBlock3(@"Apple", 1984);// Response = Apple, Code = 1984
         
         [MyRootClass info];
 #pragma mark - Operation on an unexisted class

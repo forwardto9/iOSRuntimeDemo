@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2B5AF4924558BA0001BFA97 /* MethodForward.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B5AF4824558BA0001BFA97 /* MethodForward.m */; };
 		C2BBFD151C9AB0CA0031A81F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BBFD141C9AB0CA0031A81F /* main.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C2B5AF4724558BA0001BFA97 /* MethodForward.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MethodForward.h; sourceTree = "<group>"; };
+		C2B5AF4824558BA0001BFA97 /* MethodForward.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MethodForward.m; sourceTree = "<group>"; };
 		C2BBFD111C9AB0CA0031A81F /* RunTimeDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RunTimeDemo; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2BBFD141C9AB0CA0031A81F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				C2BBFD141C9AB0CA0031A81F /* main.m */,
+				C2B5AF4724558BA0001BFA97 /* MethodForward.h */,
+				C2B5AF4824558BA0001BFA97 /* MethodForward.m */,
 			);
 			path = RunTimeDemo;
 			sourceTree = "<group>";
@@ -101,6 +106,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = C2BBFD081C9AB0CA0031A81F;
@@ -118,6 +124,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2B5AF4924558BA0001BFA97 /* MethodForward.m in Sources */,
 				C2BBFD151C9AB0CA0031A81F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
