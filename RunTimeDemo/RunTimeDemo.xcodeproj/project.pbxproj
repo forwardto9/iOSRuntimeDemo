@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C21D2B1E27101A1500346C51 /* MyRootClass.m in Sources */ = {isa = PBXBuildFile; fileRef = C21D2B1D27101A1500346C51 /* MyRootClass.m */; };
+		C21D2B2127101A6100346C51 /* MyClass.m in Sources */ = {isa = PBXBuildFile; fileRef = C21D2B2027101A6100346C51 /* MyClass.m */; };
+		C21D2B2427101A9A00346C51 /* MySubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = C21D2B2327101A9A00346C51 /* MySubClass.m */; };
+		C21D2B2727101AD000346C51 /* LayoutClass.m in Sources */ = {isa = PBXBuildFile; fileRef = C21D2B2627101AD000346C51 /* LayoutClass.m */; };
 		C2B5AF4924558BA0001BFA97 /* MethodForward.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B5AF4824558BA0001BFA97 /* MethodForward.m */; };
 		C2BBFD151C9AB0CA0031A81F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BBFD141C9AB0CA0031A81F /* main.m */; };
 /* End PBXBuildFile section */
@@ -24,6 +28,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C21D2B1C27101A1500346C51 /* MyRootClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyRootClass.h; sourceTree = "<group>"; };
+		C21D2B1D27101A1500346C51 /* MyRootClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyRootClass.m; sourceTree = "<group>"; };
+		C21D2B1F27101A6100346C51 /* MyClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyClass.h; sourceTree = "<group>"; };
+		C21D2B2027101A6100346C51 /* MyClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyClass.m; sourceTree = "<group>"; };
+		C21D2B2227101A9A00346C51 /* MySubClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MySubClass.h; sourceTree = "<group>"; };
+		C21D2B2327101A9A00346C51 /* MySubClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MySubClass.m; sourceTree = "<group>"; };
+		C21D2B2527101AD000346C51 /* LayoutClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LayoutClass.h; sourceTree = "<group>"; };
+		C21D2B2627101AD000346C51 /* LayoutClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LayoutClass.m; sourceTree = "<group>"; };
 		C2B5AF4724558BA0001BFA97 /* MethodForward.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MethodForward.h; sourceTree = "<group>"; };
 		C2B5AF4824558BA0001BFA97 /* MethodForward.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MethodForward.m; sourceTree = "<group>"; };
 		C2BBFD111C9AB0CA0031A81F /* RunTimeDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RunTimeDemo; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +73,14 @@
 			isa = PBXGroup;
 			children = (
 				C2BBFD141C9AB0CA0031A81F /* main.m */,
+				C21D2B1C27101A1500346C51 /* MyRootClass.h */,
+				C21D2B1D27101A1500346C51 /* MyRootClass.m */,
+				C21D2B1F27101A6100346C51 /* MyClass.h */,
+				C21D2B2027101A6100346C51 /* MyClass.m */,
+				C21D2B2227101A9A00346C51 /* MySubClass.h */,
+				C21D2B2327101A9A00346C51 /* MySubClass.m */,
+				C21D2B2527101AD000346C51 /* LayoutClass.h */,
+				C21D2B2627101AD000346C51 /* LayoutClass.m */,
 				C2B5AF4724558BA0001BFA97 /* MethodForward.h */,
 				C2B5AF4824558BA0001BFA97 /* MethodForward.m */,
 			);
@@ -124,8 +144,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C21D2B2727101AD000346C51 /* LayoutClass.m in Sources */,
+				C21D2B2127101A6100346C51 /* MyClass.m in Sources */,
 				C2B5AF4924558BA0001BFA97 /* MethodForward.m in Sources */,
+				C21D2B1E27101A1500346C51 /* MyRootClass.m in Sources */,
 				C2BBFD151C9AB0CA0031A81F /* main.m in Sources */,
+				C21D2B2427101A9A00346C51 /* MySubClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

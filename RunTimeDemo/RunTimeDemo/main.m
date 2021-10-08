@@ -9,127 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <objc/message.h>
 #import "MethodForward.h"
+#import "MyRootClass.h"
+#import "MyClass.h"
+#import "MySubClass.h"
+#import "LayoutClass.h"
 
 // OBJC_OLD_DISPATCH_PROTOTYPES
-
-
-// this is a method to custom a root class without inheried from superclass
-OBJC_ROOT_CLASS @interface MyRootClass
-+ (void)info;
-@end
-
-@implementation MyRootClass
-+ (void)info {
-    NSLog(@"MY ROOT Class");
-}
-@end
-
-@protocol MyProtocol <NSObject>
-
-@optional
-- (void)myProctolMethod;
-
-@end
-
-
-@interface MyClass: NSObject<MyProtocol> {
-    // 整形， 4
-    // 8,长整形，浮点型，引用类型
-    int instanceVar;
-}
-
-@property (assign, atomic)  CGFloat  age;
-@property (nonatomic, copy) NSString *name;
-
-
-- (void)myClassInstanceMethodWithOutParamater;
-- (void)myClassInstanceMethodWithParamater:(id)paramater;
-- (void)myClassInstanceMethodWithParamater:(NSArray *)p1 p2:(int)p2;
-+ (void)myClassClassMethodWithOutParamater;
-+ (void)myClassClassMethodWithParamater1:(NSString *)p1 paramater2:(NSArray <NSNumber *> *)p2;
-
-- (void)canBeReplacedMethod;
-
-- (NSInteger)myClassInstanceMethodWithParameterAndReturnValue:(NSInteger)paramater;
-- (NSString *)description;
-
-@end
-
-
-@implementation MyClass
-
-- (void)myClassInstanceMethodWithOutParamater {
-    NSLog(@"myClassInstanceMethodWithOutParamater");
-}
-
-- (void)myClassInstanceMethodWithParamater:(id)paramater {
-    NSLog(@"myClassInstanceMethodWithParamater is %@", paramater);
-}
-
-- (void)myClassInstanceMethodWithParamater:(NSArray *)p1 p2:(int)p2 {
-    
-}
-
-+ (void)myClassClassMethodWithOutParamater {
-    NSLog(@"myClassClassMethodWithOutParamater");
-}
-
-- (void)canBeReplacedMethod {
-    NSLog(@"canBeReplacedMethod");
-}
-
-- (NSInteger)myClassInstanceMethodWithParameterAndReturnValue:(NSInteger)paramater {
-    return paramater + 100;
-}
-
-- (void)canBeReplacedByIMP {
-    NSLog(@"%s", __FUNCTION__);
-}
-
-// c method
-- (void)myClassReplacedMethod {
-    NSLog(@"myClassReplacedMethod");
-}
-
-+ (void)myClassClassMethodWithParamater1:(NSString *)p1 paramater2:(NSArray<NSNumber *> *)p2 {
-}
-
-+ (int)getVersion {
-    return 2;
-}
-
-- (NSString *)description {
-    NSLog(@"this this my class");
-    return @"this is my class";
-}
-
-@end
-
-@interface MySubClass:MyClass {
-    
-}
-
-@end
-@implementation MySubClass
-@end
-
-@interface LayoutClass:NSObject{
-}
-
-@property (nonatomic, strong)  id  prop1_s;
-// 内存中的layout 将会优先排列基本数据类型
-@property (nonatomic, assign)  int  prop0_int;
-@property (nonatomic, assign)  int  prop1_int;
-@property (nonatomic, assign)  int  prop2_int;
-
-@property (nonatomic, strong)  id  prop2_s;
-@property (nonatomic, weak)  id  prop3_w;
-@property (nonatomic, strong)  id  prop4_s;
-
-@end
-@implementation LayoutClass
-@end
-
 // c method
 void myClassReplaceMethod(id self, SEL _cmd) {
     NSLog(@"myClassReplaceMethod");
@@ -295,7 +180,9 @@ int main(int argc, const char * argv[]) {
         commonBlock2(999);// Code = 999
         commonBlock3(@"Apple", 1984);// Response = Apple, Code = 1984
         
+        // 自定义一个根类，且不是继承NSObject
         [MyRootClass info];
+        
 #pragma mark - Operation on an unexisted class
         // create a new class
         Class cls = objc_allocateClassPair([NSObject class], "NewDynamicClass", 0);
@@ -517,7 +404,7 @@ int main(int argc, const char * argv[]) {
         // 对于持久化(archive)很重要，可以知道类的Layout变化
         [MyClass setVersion:3];
         int myClassVersion = class_getVersion(myClass);
-        NSLog(@"My class current version is %d", [MyClass getVersion]);
+        NSLog(@"My class current version is %ld", (long)[MyClass version]);
         
         /****************  working with instance start******************** */
         
